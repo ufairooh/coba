@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Frm_ManagementEmp.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;DVD_fix&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">model</a> &gt; <span class="el_source">Frm_ManagementEmp.java</span></div><h1>Frm_ManagementEmp.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package model;
+
+import Main.Login;
+import Main.Management;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+/**
+ *
+ * @author Azka
+ */
+<span class="fc" id="L22">public class Frm_ManagementEmp {</span>
+    String idadm;
+    String aiddept;
+    String aname;
+    String agdr;
+    String aphone;
+    String auser ;
+    String apass ;
+    String idname;
+    Connection con;
+    ResultSet rs;
+    Statement stmt;
+    PreparedStatement stat;
+    DefaultTableModel mdl;
+    
+    public String getIdname() {
+<span class="nc" id="L38">        return idname;</span>
+    }
+
+    public void setIdname(String idname) {
+<span class="fc" id="L42">        this.idname = idname;</span>
+<span class="fc" id="L43">    }</span>
+    
+    public String getIdadm() {
+<span class="nc" id="L46">        return idadm;</span>
+    }
+
+    public void setIdadm(String idadm) {
+<span class="fc" id="L50">        this.idadm = idadm;</span>
+<span class="fc" id="L51">    }</span>
+
+    public String getAiddept() {
+<span class="nc" id="L54">        return aiddept;</span>
+    }
+
+    public void setAiddept(String aiddept) {
+<span class="fc" id="L58">        this.aiddept = aiddept;</span>
+<span class="fc" id="L59">    }</span>
+
+    public String getAname() {
+<span class="nc" id="L62">        return aname;</span>
+    }
+
+    public void setAname(String aname) {
+<span class="fc" id="L66">        this.aname = aname;</span>
+<span class="fc" id="L67">    }</span>
+
+    public String getAgdr() {
+<span class="nc" id="L70">        return agdr;</span>
+    }
+
+    public void setAgdr(String agdr) {
+<span class="fc" id="L74">        this.agdr = agdr;</span>
+<span class="fc" id="L75">    }</span>
+
+    public String getAphone() {
+<span class="nc" id="L78">        return aphone;</span>
+    }
+
+    public void setAphone(String aphone) {
+<span class="fc" id="L82">        this.aphone = aphone;</span>
+<span class="fc" id="L83">    }</span>
+
+    public String getAuser() {
+<span class="nc" id="L86">        return auser;</span>
+    }
+
+    public void setAuser(String auser) {
+<span class="fc" id="L90">        this.auser = auser;</span>
+<span class="fc" id="L91">    }</span>
+
+    public String getApass() {
+<span class="nc" id="L94">        return apass;</span>
+    }
+
+    public void setApass(String apass) {
+<span class="fc" id="L98">        this.apass = apass;</span>
+<span class="fc" id="L99">    }</span>
+    
+
+    private void getConnection() {
+        try
+        {
+<span class="fc" id="L105">           Class.forName(&quot;com.microsoft.sqlserver.jdbc.SQLServerDriver&quot;);</span>
+<span class="fc" id="L106">            con = DriverManager.getConnection(&quot;jdbc:sqlserver://DESKTOP-764PK2R;databaseName=Project_DVD;user=sa;password=azkady1930&quot;);</span>
+<span class="fc" id="L107">            stmt = con.createStatement();</span>
+        }       
+<span class="nc" id="L109">catch (Exception e)</span>
+        {
+<span class="nc" id="L111">         System.out.println(&quot;Error&quot;+ e);</span>
+<span class="fc" id="L112">        }</span>
+<span class="fc" id="L113">    }</span>
+
+    public int doInsertEmp(){
+<span class="fc" id="L116">	int i = 0;</span>
+<span class="fc" id="L117">        String selectDept = &quot;Select IDDept from employee where username = ?&quot;;</span>
+<span class="fc" id="L118">        this.getConnection();</span>
+        
+        try
+        {
+<span class="fc" id="L122">            stat=con.prepareStatement(selectDept);</span>
+<span class="fc" id="L123">            stat.setString(1, idname);</span>
+<span class="fc" id="L124">            rs = stat.executeQuery();</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">            if(rs.next())</span>
+           {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">                if(rs.getObject(&quot;IDDept&quot;).equals(&quot;STO&quot;))</span>
+                {
+<span class="fc" id="L129">                    JOptionPane.showMessageDialog(null, &quot;DENIED ACCESS!&quot;);</span>
+<span class="fc" id="L130">                    i=0;</span>
+                }
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">                else if(rs.getObject(&quot;IDDept&quot;).equals(&quot;ADM&quot;))</span>
+                {
+                    try
+                    {
+<span class="fc" id="L136">                        String str = &quot;INSERT INTO Employee VALUES(?,?,?,?,?,?,?)&quot;;</span>
+<span class="fc" id="L137">                        PreparedStatement stat = con.prepareStatement(str);</span>
+<span class="fc" id="L138">                        stat.setString(1, idadm);</span>
+<span class="fc" id="L139">                        stat.setString(2, aiddept);</span>
+<span class="fc" id="L140">                        stat.setString(3, aname);</span>
+<span class="fc" id="L141">                        stat.setString(4, agdr);</span>
+<span class="fc" id="L142">                        stat.setString(5, aphone);</span>
+<span class="fc" id="L143">                        stat.setString(6, auser);</span>
+<span class="fc" id="L144">                        stat.setString(7, apass);</span>
+<span class="fc" id="L145">                        stat.executeUpdate();</span>
+<span class="fc" id="L146">                        JOptionPane.showMessageDialog(null, &quot;Input new employee success!&quot;);</span>
+<span class="fc" id="L147">                        i =1;                    </span>
+                    }
+<span class="nc" id="L149">                    catch (Exception e)</span>
+                    {
+<span class="nc" id="L151">                        System.out.println(e);</span>
+<span class="pc" id="L152">                    }</span>
+                }else{
+<span class="nc" id="L154">                    JOptionPane.showMessageDialog(null, &quot;DENIED ACCESS!&quot;, &quot;Error!&quot;,JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L155">                    i=0;</span>
+                }
+           }
+        }
+<span class="nc" id="L159">            catch (Exception e)</span>
+        {
+<span class="nc" id="L161">            System.out.println(e);</span>
+<span class="fc" id="L162">        }</span>
+<span class="fc" id="L163">	return i;</span>
+	}
+    
+    
+    public int doUpdateEmp(){
+<span class="fc" id="L168">        int i=0;</span>
+<span class="fc" id="L169">        String selectDept = &quot;Select IDDept from employee where username = ?&quot;;</span>
+<span class="fc" id="L170">        String updateEmp = &quot;EXEC updateEmp ?,?,?,?,?&quot;;</span>
+<span class="fc" id="L171">        this.getConnection();</span>
+        
+        try
+        {
+<span class="fc" id="L175">            stat=con.prepareStatement(selectDept);</span>
+<span class="fc" id="L176">            stat.setString(1, idname);</span>
+<span class="fc" id="L177">            rs = stat.executeQuery();</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">            if(rs.next())</span>
+           {
+<span class="fc bfc" id="L180" title="All 2 branches covered.">                if(rs.getObject(&quot;IDDept&quot;).equals(&quot;STO&quot;))</span>
+                {
+<span class="fc" id="L182">                    JOptionPane.showMessageDialog(null, &quot;DENIED ACCESS!&quot;);</span>
+<span class="fc" id="L183">                    i=0;</span>
+                }
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">                else if(rs.getObject(&quot;IDDept&quot;).equals(&quot;ADM&quot;))</span>
+                {
+                    try
+                    {
+                        //isi kodingannya disini
+<span class="fc" id="L190">                        stat = con.prepareStatement(updateEmp);</span>
+<span class="fc" id="L191">                        stat.setString(1, idadm);</span>
+<span class="fc" id="L192">                        stat.setString(2, aiddept);</span>
+<span class="fc" id="L193">                        stat.setString(3, aphone);</span>
+<span class="fc" id="L194">                        stat.setString(4, auser);</span>
+<span class="fc" id="L195">                        stat.setString(5, apass);</span>
+<span class="fc" id="L196">                        stat.executeUpdate();</span>
+<span class="fc" id="L197">                        JOptionPane.showMessageDialog(null, &quot;Update data succes!&quot;);</span>
+<span class="fc" id="L198">                        i =1;                   </span>
+                    }
+<span class="nc" id="L200">                    catch (Exception e)</span>
+                    {
+<span class="nc" id="L202">                        System.out.println(e);</span>
+<span class="pc" id="L203">                    }</span>
+                }else{
+<span class="nc" id="L205">                    JOptionPane.showMessageDialog(null, &quot;DENIED ACCESS!&quot;, &quot;Error!&quot;,JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L206">                    i=0;</span>
+                }
+           }
+        }
+<span class="nc" id="L210">            catch (Exception e)</span>
+        {
+<span class="nc" id="L212">            System.out.println(e);</span>
+<span class="fc" id="L213">        }</span>
+        
+<span class="fc" id="L215">        return i;</span>
+    }
+    
+     public int doDeleteEmp(){
+<span class="nc" id="L219">        int i=0;</span>
+<span class="nc" id="L220">        String selectDept = &quot;Select IDDept from employee where username = ?&quot;;</span>
+<span class="nc" id="L221">        String deleteEmp = &quot;delete Employee where IDEmp = ?&quot;;</span>
+<span class="nc" id="L222">        this.getConnection();</span>
+        
+        try
+        {
+<span class="nc" id="L226">            stat=con.prepareStatement(selectDept);</span>
+<span class="nc" id="L227">            stat.setString(1, idname);</span>
+<span class="nc" id="L228">            rs = stat.executeQuery();</span>
+<span class="nc bnc" id="L229" title="All 2 branches missed.">            if(rs.next())</span>
+           {
+<span class="nc bnc" id="L231" title="All 2 branches missed.">                if(rs.getObject(&quot;IDDept&quot;).equals(&quot;STO&quot;))</span>
+                {
+<span class="nc" id="L233">                    JOptionPane.showMessageDialog(null, &quot;DENIED ACCESS!&quot;);</span>
+<span class="nc" id="L234">                    i=0;</span>
+                }
+<span class="nc bnc" id="L236" title="All 2 branches missed.">                else if(rs.getObject(&quot;IDDept&quot;).equals(&quot;ADM&quot;))</span>
+                {
+                    try
+                    {
+                        //isi kodingannya disini
+<span class="nc" id="L241">                        stat = con.prepareStatement(deleteEmp);</span>
+<span class="nc" id="L242">                        stat.setString(1, idadm);</span>
+<span class="nc" id="L243">                        stat.executeUpdate();</span>
+<span class="nc" id="L244">                        JOptionPane.showMessageDialog(null, &quot;Delete succes!&quot;);</span>
+<span class="nc" id="L245">                        i =1;                   </span>
+                    }
+<span class="nc" id="L247">                    catch (Exception e)</span>
+                    {
+<span class="nc" id="L249">                        System.out.println(e);</span>
+<span class="nc" id="L250">                    }</span>
+                }else{
+<span class="nc" id="L252">                    JOptionPane.showMessageDialog(null, &quot;DENIED ACCESS!&quot;, &quot;Error!&quot;,JOptionPane.ERROR_MESSAGE);</span>
+<span class="nc" id="L253">                    i=0;</span>
+                }
+           }
+        }
+<span class="nc" id="L257">            catch (Exception e)</span>
+        {
+<span class="nc" id="L259">            System.out.println(e);</span>
+<span class="nc" id="L260">        }</span>
+        
+<span class="nc" id="L262">        return i;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
